@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Welcome To Laboratory UPN "Veteran" Yogyakarta</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body, html {
+    height: 100%;
+    background: url('images/Laboratorium UPNVYK.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #f6e500;
+    overflow-x: hidden;
+  }
+
+  /* Overlay for text clarity */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(15,15,0,0.7);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Landing Page 1 and 2 base styles for transitions */
+  #landing1, #landing2 {
+    position: relative;
+    transition: 
+      opacity 0.9s ease, 
+      transform 0.9s ease, 
+      filter 0.9s ease;
+    transform-origin: center center;
+    z-index: 1;
+  }
+  .visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) blur(0);
+  }
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95) blur(2px);
+  }
+
+  /* Landing Page 1 */
+  #landing1 {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+    background: transparent;
+  }
+  #landing1 h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-shadow:
+      3px 3px 8px rgba(30,30,0,0.9),
+      0 0 25px #f6e500,
+      0 0 30px #f6e500;
+    margin-bottom: 20px;
+    animation: blink 1.5s infinite alternate;
+    max-width: 900px;
+    color: #f6e500;
+  }
+  #landing1 p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 50px;
+    max-width: 710px;
+    font-style: italic;
+    color: #f6e500;
+    text-shadow:
+      1.5px 1.5px 4px rgba(30,30,0,0.9);
+    animation: blink 1.5s infinite alternate;
+  }
+
+  /* Buttons - modern gradient with subtle shadows */
+  .btn {
+    cursor: pointer;
+    background: linear-gradient(145deg, #f6e500, #d4c300);
+    border: none;
+    padding: 14px 36px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #2a2400;
+    border-radius: 35px;
+    box-shadow:
+      0 4px 7px #b3a700,
+      inset 0 -3px 5px #b3a700;
+    transition: all 0.3s ease;
+    user-select: none;
+    animation: blink 1.5s infinite alternate;
+  }
+  .btn:hover, .btn:focus {
+    background: linear-gradient(155deg, #d4c300, #f6e500);
+    box-shadow:
+      0 6px 12px #b3a700,
+      inset 0 -3px 5px #d4c300;
+    outline: none;
+    transform: translateY(-3px);
+  }
+
+  /* Landing Page 2 */
+  #landing2 {
+    min-height: 100vh;
+    overflow-y: auto;
+    background: transparent;
+  }
+  #landing2::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,15,0,0.75);
+    z-index: -1;
+  }
+
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15,15,0,0.9);
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-shadow: 0 2px 9px rgba(30,30,0,0.8);
+    backdrop-filter: saturate(180%) blur(12px);
+    z-index: 1001;
+    gap: 22px;
+  }
+
+  .nav-left {
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: #f6e500;
+    user-select: none;
+    text-shadow:
+      0 0 12px #d4c300,
+      0 0 20px #b3a700;
+    font-family: 'Segoe UI Black', 'Arial Black', sans-serif;
+    white-space: nowrap;
+    animation: blink 1.5s infinite alternate;
+  }
+  .nav-left span {
+    font-style: italic;
+    font-weight: 900;
+    color: #d4c300;
+    text-shadow: 0 0 15px #b3a700cc;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  nav a, nav button {
+    background: none;
+    border: none;
+    color: #f6e500;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 20px;
+    transition: background 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    user-select: none;
+    animation: blink 1.5s infinite alternate;
+  }
+  nav a:hover, nav button:hover,
+  nav a:focus, nav button:focus {
+    background: #b3a70022;
+    color: #d4c300;
+    outline: none;
+  }
+
+  /* Hamburger styles */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  .hamburger span {
+    height: 3.5px;
+    width: 100%;
+    background-color: #f6e500;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    transition: 0.3s ease;
+  }
+  .hamburger span:last-child {
+    margin-bottom: 0;
+  }
+  /* toggle hamburger open animation */
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Responsive - Show hamburger on small screens */
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 20px;
+    }
+    .nav-right {
+      position: fixed;
+      top: 70px;
+      right: 0;
+      background: rgba(15,15,0,0.95);
+      height: calc(100vh - 70px);
+      width: 230px;
+      flex-direction: column;
+      align-items: start;
+      gap: 0;
+      padding-top: 15px;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.7);
+    }
+    .nav-right.open {
+      transform: translateX(0);
+    }
+    nav a, nav button {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 0;
+      box-sizing: border-box;
+      border-bottom: 1px solid #d4c30055;
+    }
+    .hamburger {
+      display: flex;
+      position: fixed;
+      top: 18px;
+      right: 22px;
+    }
+  }
+
+  /* Back Button */
+  #backBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1010;
+    background: linear-gradient(145deg, #f6e500, #d4c300);
+    border-radius: 30px;
+    padding: 10px 22px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2a2400;
+    box-shadow:
+      0 4px 7px #b3a70088,
+      inset 0 -3px 5px #b3a700cc;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    animation: blink 1.5s infinite alternate;
+  }
+  #backBtn:hover, #backBtn:focus {
+    background: linear-gradient(155deg, #d4c300, #f6e500);
+    box-shadow:
+      0 6px 12px #b3a700cc,
+      inset 0 -3px 5px #d4c300;
+    outline: none;
+    transform: translateY(-3px);
+  }
+
+  /* Sections */
+  .section {
+    max-width: 960px;
+    margin: 110px auto 80px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+    background: rgba(15, 15, 0, 0.6);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(15,15,0,0.7);
+    backdrop-filter: saturate(180%) blur(10px);
+  }
+  .section h2 {
+    font-size: 2.7rem;
+    font-weight: 900;
+    color: #f6e500;
+    margin-bottom: 18px;
+    border-bottom: 3.5px solid #b3a700;
+    display: inline-block;
+    animation: blink 1.5s infinite alternate;
+  }
+  .section p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #f6e500cc;
+    animation: blink 1.5s infinite alternate;
+  }
+
+  /* Features grid */
+  #features .feature-card {
+    background: rgba(30, 30, 0, 0.7);
+    border-radius: 20px;
+    box-shadow:
+      0 0 20px 4px #b3a700cc;
+    padding: 26px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: default;
+  }
+  #features .feature-card:hover, #features .feature-card:focus {
+    transform: translateY(-14px);
+    box-shadow:
+      0 0 40px 7px #f6e500;
+    outline: none;
+  }
+  #features .feature-card h3 {
+    margin-bottom: 16px;
+    color: #f6e500;
+    font-size: 1.45rem;
+    font-weight: 900;
+    animation: blink 1.5s infinite alternate;
+  }
+  #features .feature-card p {
+    font-size: 1.1rem;
+    color: #dcdc8c;
+  }
+
+  /* Contact styles */
+  #contact h3 {
+    color: #f6e500;
+    font-weight: 900;
+    margin-bottom: 14px;
+    animation: blink 1.5s infinite alternate;
+  }
+  #contact p {
+    font-size: 1.15rem;
+    color: #f6e500cc;
+  }
+  #contact a {
+    color: #f6e500cc;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.35s ease;
+  }
+  #contact a:hover, #contact a:focus {
+    color: #f6e500;
+    text-decoration: underline;
+    outline: none;
+  }
+
+  /* Virtual Tour Section */
+  #virtual-tour {
+    max-width: 960px;
+    margin: 110px auto 80px;
+    padding: 40px 24px;
+    position: relative;
+    z-index: 1;
+    background: rgba(15, 15, 0, 0.7);
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(180,150,0,0.9);
+    text-align: center;
+  }
+  #virtual-tour h2 {
+    font-size: 2.9rem;
+    font-weight: 900;
+    color: #f6e500;
+    margin-bottom: 25px;
+    text-shadow:
+      0 0 22px #f6e500cc,
+      0 0 34px #b3a700cc;
+    animation: blink 1.5s infinite alternate;
+  }
+  #virtual-tour .btn {
+    font-size: 1.35rem;
+    padding: 18px 48px;
+    border-radius: 40px;
+    box-shadow:
+      0 0 30px 7px #b3a700cc,
+      inset 0 -5px 12px #d4c300cc;
+    transition: all 0.4s ease;
+    color: #2a2400;
+    background: linear-gradient(145deg, #f6e500, #d4c300);
+  }
+  #virtual-tour .btn:hover, #virtual-tour .btn:focus {
+    box-shadow:
+      0 0 40px 11px #f6e500cc,
+      inset 0 -5px 15px #b3a700cc;
+    background: linear-gradient(145deg, #d4c300, #f6e500);
+    outline: none;
+    transform: translateY(-5px);
+  }
+
+  /* Animations */
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 20px;
+    }
+    .nav-right {
+      position: fixed;
+      top: 70px;
+      right: 0;
+      background: rgba(15,15,0,0.95);
+      height: calc(100vh - 70px);
+      width: 230px;
+      flex-direction: column;
+      align-items: start;
+      gap: 0;
+      padding-top: 15px;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.7);
+    }
+    .nav-right.open {
+      transform: translateX(0);
+    }
+    nav a, nav button {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 0;
+      box-sizing: border-box;
+      border-bottom: 1px solid #d4c30055;
+    }
+    .hamburger {
+      display: flex;
+      position: fixed;
+      top: 18px;
+      right: 22px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #landing1 h1 {
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      max-width: 100%;
+    }
+    nav {
+      justify-content: space-between;
+      padding: 0 12px;
+      gap: 14px;
+    }
+    .nav-left {
+      font-size: 1.1rem;
+      padding-left: 8px;
+    }
+    .nav-right {
+      gap: 10px;
+    }
+    nav a, nav button {
+      font-size: 0.95rem;
+      padding: 8px 10px;
+    }
+    nav #musicToggleBtn {
+      font-size: 1.1rem;
+      margin-left: 8px;
+      padding: 6px 12px;
+    }
+    #backBtn {
+      bottom: 20px;
+      left: 20px;
+      padding: 8px 18px;
+      font-size: 1rem;
+    }
+    #virtual-tour {
+      margin: 100px 15px 65px;
+      padding: 28px 20px;
+    }
+    #virtual-tour h2 {
+      font-size: 2rem;
+    }
+    #virtual-tour .btn {
+      font-size: 1.15rem;
+      padding: 14px 36px;
+    }
+    .section {
+      margin: 90px 15px 50px;
+      padding: 16px 18px;
+    }
+    .section h2 {
+      font-size: 2.1rem;
+    }
+    .section p {
+      font-size: 1rem;
+    }
+    #features .feature-card {
+      padding: 18px 14px;
+    }
+    #features .feature-card h3 {
+      font-size: 1.2rem;
+    }
+    #features .feature-card p {
+      font-size: 0.95rem;
+    }
+  }
+
+  /* Music button positioned bottom right */
+  #musicToggleBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1101;
+    background: linear-gradient(145deg, #f6e500, #d4c300);
+    box-shadow:
+      0 4px 7px #b3a70088,
+      inset 0 -3px 5px #b3a700cc;
+    border-radius: 30px;
+    padding: 8px 14px;
+    font-size: 1.35rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    animation: blink 1.5s infinite alternate;
+    border: none;
+  }
+  #musicToggleBtn:hover, #musicToggleBtn:focus {
+    background: linear-gradient(155deg, #d4c300, #f6e500);
+    box-shadow:
+      0 6px 12px #b3a700cc,
+      inset 0 -3px 5px #d4c300;
+    outline: none;
+    transform: translateY(-3px);
+  }
+</style>
+</head>
+<body>
+
+<!-- Landing Page 1 -->
+<section id="landing1" aria-label="Landing page welcome" class="visible">
+  <h1>Welcome to Laboratorium Riset Terpadu UPN "Veteran" Yogyakarta</h1>
+  <p class="slowmo-text" aria-live="polite">Explore innovative research and technology.</p>
+  <button class="btn" id="getStartedBtn" aria-label="Start experience"><cite>&quot;Get Started&quot;<cite></button>
+</section>
+
+<!-- Landing Page 2 -->
+<section id="landing2" aria-label="Landing page information" class="hidden" style="display:none;">
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-left" aria-label="Brand">
+      UPN <span>&quot;Veteran&quot;</span> Yogyakarta
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navigation-menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-right" id="navigation-menu">
+      <a href="#virtual-tour" class="nav-link" tabindex="0">Virtual Tour</a>
+      <a href="#about" class="nav-link" tabindex="0">About</a>
+      <a href="#features" class="nav-link" tabindex="0">Features</a>
+      <a href="#instrument" class="nav-link" tabindex="0">Laboratory Instruments</a>
+      <a href="#contact" class="nav-link" tabindex="0">Contact</a>
+    </div>
+  </nav>
+
+  <button id="backBtn" aria-label="Back to home">Back</button>
+
+  <div id="virtual-tour" tabindex="0">
+    <h2>Virtual Tour</h2>
+    <button class="btn" id="virtualTourBtn" aria-label="Start virtual tour"><cite>&quot;Start Virtual Tour&quot;</cite></button>
+  </div>
+
+  <div class="section" id="about" tabindex="0">
+    <h2>About The Laboratory</h2>
+    <p>Laboratorium Riset Terpadu UPN “Veteran” Yogyakarta merupakan fasilitas riset unggulan yang dibangun untuk mendukung kegiatan penelitian lintas disiplin di lingkungan universitas. Pembangunan gedung ini dimulai pada tahun 2019 dan secara resmi diresmikan pada tanggal 28 Juni 2021. Gedung ini terdiri atas empat lantai dan satu <cite>rooftop</cite>, dengan luas bangunan mencapai kurang lebih 2.800 meter persegi.<p>
+    <p>Laboratorium ini dirancang sebagai pusat kolaborasi antara fakultas, pusat studi, dan mitra eksternal, baik dari dunia industri maupun lembaga pemerintah. Berlokasi di Kampus Condongcatur, Sleman, gedung ini menjadi simbol komitmen UPN “Veteran” Yogyakarta dalam memajukan riset, inovasi, dan pengembangan teknologi. Dilengkapi dengan fasilitas modern dan sistem manajemen laboratorium berbasis digital, Laboratorium Riset Terpadu berperan penting dalam mendukung kegiatan akademik, program Merdeka Belajar Kampus Merdeka (MBKM), serta pengembangan produk riset yang berdampak nyata bagi masyarakat.</p>
+  </div>
+
+  <div class="section" id="features" tabindex="0">
+    <h2>Featured Highlights</h2>
+    <div aria-label="List of featured highlights">
+      <div class="feature-card" tabindex="0">
+        <h3>Fasilitas Riset Terpadu</h3>
+        <p>Pusat riset yang terintegrasi dengan peralatan canggih untuk mendukung kegiatan penelitian multidisiplin dalam satu tempat.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Teknologi Terkini</cite></h3>
+        <p>Akses ke berbagai perangkat digital mutakhir, sistem pemetaan 3D, alat penginderaan jauh, dan peralatan canggih lainnya untuk meningkatkan ketelitian dan inovasi penelitian.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Ekosistem Kolaborasi</h3>
+        <p>Mendorong kolaborasi antara mahasiswa, dosen, dan peneliti lintas bidang guna menghasilkan proyek riset yang berdampak luas.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Ruang Seminar dan Diskusi Cerdas</h3>
+        <p>Ruang seminar dan diskusi yang modern, dilengkapi sistem digital pintar, ideal untuk presentasi, lokakarya, dan forum ilmiah.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Dukungan untuk Inovasi dan Prototipe</h3>
+        <p>Ruang dan peralatan khusus untuk pengembangan prototipe dan riset eksperimental, mendukung mahasiswa dan peneliti dalam mewujudkan ide menjadi solusi nyata.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="instrument" tabindex="0">
+  <h2>Laboratory Instruments</h2>
+  
+  <div aria-label="List of Laboratory Instruments">
+    <div class="instrument-card" tabindex="0">
+      <h3>Scanning Electron Microscope + MLA Oxford</h3>
+      <p>
+        Scanning Electron Microscope (SEM) yang dipadukan dengan MLA Oxford merupakan alat canggih yang digunakan 
+        untuk mengamati struktur permukaan dan morfologi mikro suatu material hingga tingkat mikroskopis, 
+        sekaligus menganalisis komposisi mineralnya secara otomatis. Alat ini bertujuan untuk mendukung 
+        identifikasi dan pemetaan mineral dalam sampel padat seperti batuan atau bijih, serta berfungsi dalam 
+        penelitian geologi, metalurgi, dan eksplorasi sumber daya alam.
+      </p>
+      <img 
+        src="images/Scanning Electron Microscope (SEM) + MLA Oxford.jpg" 
+        alt="Scanning Electron Microscope" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Wavelength Dispersive X-Ray Fluorescence</h3>
+      <p>
+        XRF merupakan alat analisis berbasis sinar-X yang mampu mendeteksi unsur-unsur kimia dalam sampel padat 
+        secara cepat dan akurat. Alat ini bertujuan untuk mengidentifikasi dan mengukur konsentrasi unsur mayor 
+        maupun minor dalam bahan geologis, industri, dan lingkungan, serta berfungsi sebagai alat analitik 
+        non-destruktif dalam kontrol kualitas maupun penelitian material.
+      </p>
+      <img 
+        src="images/Wavelength Dispersive X-Ray Fluorescence.jpg" 
+        alt="Wavelength Dispersive X-Ray Fluorescence" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Floor-Stand X-Ray Diffractometer</h3>
+      <p>
+        XRD adalah instrumen yang digunakan untuk menganalisis struktur kristal suatu material melalui pola 
+        difraksi sinar-X, dengan tambahan perangkat untuk persiapan sampel agar hasil lebih akurat. Alat ini 
+        bertujuan mengidentifikasi fasa kristalin, menentukan ukuran partikel, serta struktur mineral, dan berfungsi 
+        dalam karakterisasi material padat seperti batuan, keramik, dan polimer.
+      </p>
+      <img 
+        src="images/Floor‑Stand X‑Ray Diffractometer (XRD).jpg" 
+        alt="Floor-Stand X-Ray Diffractometer" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Mercury Analyzer</h3>
+      <p>
+        Mercury Analyzer digunakan untuk mendeteksi kadar merkuri dalam berbagai jenis sampel, baik cair maupun padat, 
+        secara cepat dan sensitif. Alat ini bertujuan untuk menganalisis pencemaran merkuri dalam lingkungan atau 
+        produk konsumsi, dan berfungsi sebagai alat pemantau kualitas lingkungan dan kesehatan publik.
+      </p>
+      <img 
+        src="images/Mercury Analyzer.jpg" 
+        alt="Mercury Analyzer" 
+       style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>TOC Analyzer + CHNS/O Analyzer</h3>
+      <p>
+        Gabungan antara TOC Analyzer dan CHNS/O Analyzer memungkinkan analisis total karbon organik serta unsur karbon, 
+        hidrogen, nitrogen, sulfur, dan oksigen dalam satu sistem. Alat ini bertujuan untuk mengukur kandungan unsur 
+        organik dan non-organik dalam air, tanah, atau bahan kimia, serta berfungsi untuk mendukung penelitian lingkungan, 
+        geokimia, dan bioteknologi.
+      </p>
+      <img 
+        src="images/TOC Analyzer.jpg" 
+        alt="TOC Analyzer + CHNS/O Analyzer" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    <div class="instrument-card" tabindex="0">
+      <h3>Microwave Digester</h3>
+      <p>
+        Microwave Digester adalah alat preparasi sampel yang menggunakan pemanasan gelombang mikro untuk melarutkan 
+        sampel secara efisien dan homogen. Alat ini bertujuan mempercepat proses destruksi sampel sebelum analisis 
+        instrumental seperti ICP-MS, serta berfungsi dalam analisis logam berat dan unsur jejak.
+      </p>
+      <img 
+        src="images/Microwave Digester.png" 
+        alt="Microwave Digester" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Magnetic Barrier Separator</h3>
+      <p>
+        Magnetic Barrier Separator merupakan alat yang menggunakan medan magnet untuk memisahkan partikel logam feromagnetik 
+        dari campuran bahan non-magnetik. Alat ini bertujuan memurnikan sampel mineral atau logam, dan berfungsi dalam proses 
+        pengolahan tambang, penelitian mineral, dan daur ulang bahan.
+      </p>
+      <img 
+        src="images/Magnetic Barrier Separator.jpg" 
+        alt="Magnetic Barrier Separator" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Swell Meter</h3>
+      <p>
+        Swell Meter digunakan untuk mengukur tingkat pembengkakan suatu material, khususnya tanah atau batuan, saat mengalami 
+        perubahan kondisi kelembaban. Alat ini bertujuan untuk mengetahui sifat ekspansif material dan berfungsi dalam analisis 
+        geoteknik, stabilitas tanah, dan perencanaan konstruksi.
+       </p>
+      <img 
+        src="images/Swell Meter.jpg" 
+        alt="Swell Meter" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>UTM Compression Machine</h3>
+      <p>
+        UTM Compression Machine merupakan alat uji mekanik yang digunakan untuk mengukur kekuatan tarik, tekan, dan lentur berbagai material. 
+        Alat ini bertujuan untuk menguji batas kekuatan material bangunan atau logam, dan berfungsi dalam kontrol kualitas, 
+        penelitian rekayasa, dan pengembangan bahan baru.
+      </p>
+      <img 
+        src="images/Universal Testing Machine (UTM).jpg" 
+        alt="UTM Compression Machine" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Simultaneous Thermal Analyzer</h3>
+      <p>
+        Simultaneous Thermal Analyzer menggabungkan analisis termogravimetri (TGA) dan diferensial kalorimetri (DSC) untuk memantau perubahan massa dan energi dalam sampel akibat pemanasan. 
+        Alat ini bertujuan mengidentifikasi sifat termal suatu material dan berfungsi dalam studi stabilitas termal, dekomposisi, dan transisi fase bahan.
+      </p>
+      <img 
+        src="images/Simultaneous Thermal Analyzer.jpg" 
+        alt="Simultaneous Thermal Analyzer" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>RT-PCR</h3>
+      <p>
+        Reverse Transcription Polymerase Chain Reaction merupakan alat yang menggabungkan proses transkripsi balik RNA menjadi DNA dan penggandaannya untuk mendeteksi materi genetik. 
+        Alat ini bertujuan untuk mengidentifikasi ekspresi gen dan keberadaan patogen seperti virus, serta berfungsi dalam diagnostik molekuler, riset biologi, dan deteksi penyakit menular.
+      </p>
+      <img 
+        src="images/RT‑PCR.png" 
+        alt="RT-PCR Instrument" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>ICP-MS</h3>
+      <p>
+        Inductively Coupled Plasma Mass Spectrometry adalah alat spektrometri massa yang menggunakan plasma sebagai sumber ion untuk mendeteksi unsur jejak dalam konsentrasi sangat rendah. 
+        Alat ini bertujuan menganalisis unsur logam dan non-logam hingga tingkat part per trillion (ppt), serta berfungsi dalam penelitian lingkungan, biomedis, dan metalurgi.
+      </p>
+      <img 
+        src="images/ICP‑MS.jpg" 
+        alt="ICP-MS Instrument" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>GC-MS</h3>
+      <p>
+        Gas Chromatography – Mass Spectrometry menggabungkan teknik pemisahan senyawa volatil melalui kromatografi gas dan identifikasinya lewat spektrometri massa. 
+        Alat ini bertujuan mengidentifikasi senyawa organik kompleks dalam campuran dan berfungsi dalam analisis forensik, kontrol kualitas makanan, lingkungan, dan obat-obatan.
+      </p>
+      <img 
+        src="images/GC‑MS.jpg" 
+        alt="GC-MS Instrument" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>HPLC</h3>
+      <p>
+        High Performance Liquid Chromatography adalah teknik kromatografi cair bertekanan tinggi yang digunakan untuk memisahkan, mengidentifikasi, dan mengukur kandungan senyawa dalam larutan. 
+        Alat ini bertujuan untuk analisis senyawa kimia secara kuantitatif dan kualitatif, serta berfungsi dalam industri farmasi, bioteknologi, dan makanan.
+      </p>
+      <img 
+        src="images/instrumen High Performance Liquid Chromatography (HPLC).jpg" 
+        alt="High Performance Liquid Chromatography" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Surface Area Analyzer</h3>
+      <p>
+        Surface Area Analyzer adalah alat yang digunakan untuk mengukur luas permukaan spesifik material padat dengan metode adsorpsi gas. 
+        Alat ini bertujuan untuk mengetahui karakter permukaan material seperti katalis atau adsorben, serta berfungsi dalam riset material, kimia permukaan, dan pengembangan teknologi nano.
+      </p>
+      <img 
+        src="images/Surface Area Analyzer.jpg" 
+        alt="Surface Area Analyzer" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Spektrofotometer UV-Vis</h3>
+      <p>
+        Spektrofotometer UV-Vis digunakan untuk mengukur absorbansi cahaya di wilayah ultraviolet dan tampak oleh suatu larutan. 
+        Alat ini bertujuan menentukan konsentrasi senyawa berdasarkan serapan cahaya dan berfungsi dalam analisis kimia, biokimia, dan kontrol kualitas industri.
+      </p>
+      <img 
+        src="images/Spektrofotometer UV‑Vis.png" 
+        alt="Spektrofotometer UV-Vis" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <div class="instrument-card" tabindex="0">
+      <h3>Bomb Calorimeter</h3>
+      <p>
+        Bomb Calorimeter merupakan alat yang digunakan untuk mengukur jumlah energi kalor yang dilepaskan dari pembakaran sempurna suatu bahan dalam ruang tertutup. 
+        Alat ini bertujuan menentukan nilai kalor bahan bakar atau zat organik, serta berfungsi dalam analisis energi, pangan, dan kimia lingkungan.
+      </p>
+      <img 
+        src="images/Bomb Calorimeter.jpg" 
+        alt="Bomb Calorimeter" 
+        style="display: block; margin: 1rem auto; max-width: 40%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" 
+      />
+    </div>
+    <!-- Add more equipment cards as needed -->
+  </div>
+</div>
+</div>
+  <div class="section" id="contact" tabindex="0">
+    <h2>Contact Us</h2>
+    <h3>Email</h3>
+    <p><a href="117210012@student.upnvyk.ac.id" target="_blank" rel="noopener noreferrer">117210012@student.upnvyk.ac.id</a></p>
+    <h3>Phone</h3>
+    <p><a href="tel:+62 8560-2939-103" target="_blank" rel="noopener noreferrer">+62 8560-2939-103</a></p>
+    <h3>Address</h3>
+    <p>Jalan Ringroad Utara, Condongcatur, Depok, Sleman, Yogyakarta, Indonesia</p>
+  </div>
+</div>
+</div>
+  <!-- Background music button -->
+  <button id="musicToggleBtn" aria-label="Toggle background music">&#128266;</button>
+
+  <!-- Background music audio -->
+  <audio id="backgroundMusic" loop>
+    <source src="coffee-with-jazz-327479.mp3" type="audio/mpeg" />
+  </audio>
+</section>
+</div>
+<script>
+  const landing1 = document.getElementById('landing1');
+  const landing2 = document.getElementById('landing2');
+  const getStartedBtn = document.getElementById('getStartedBtn');
+  const virtualTourBtn = document.getElementById('virtualTourBtn');
+  const musicToggleBtn = document.getElementById('musicToggleBtn');
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  const backBtn = document.getElementById('backBtn');
+  const hamburger = document.getElementById('hamburger');
+  const navRight = document.getElementById('navigation-menu');
+
+  // Show and hide with scale/blur fade effect
+  async function showSection(toShow, toHide) {
+    // Hide current
+    toHide.classList.remove('visible');
+    toHide.classList.add('hidden');
+    await new Promise(r => setTimeout(r, 950));
+
+    toHide.style.display = 'none';
+
+    // Show new
+    toShow.style.display = toShow.id === 'landing1' ? 'flex' : 'block';
+    await new Promise(r => setTimeout(r, 30));
+    toShow.classList.remove('hidden');
+    toShow.classList.add('visible');
+  }
+
+  // Initial states
+  landing1.classList.add('visible');
+  landing2.classList.add('hidden');
+  landing2.style.display = 'none';
+  backBtn.style.display = 'none';
+
+  getStartedBtn.addEventListener('click', async () => {
+    await showSection(landing2, landing1);
+    backBtn.style.display = 'block';
+    window.scrollTo(0,0);
+    backgroundMusic.play().catch(() => {});
+    updateMusicIcon();
+  });
+
+  backBtn.addEventListener('click', async () => {
+    await showSection(landing1, landing2);
+    backBtn.style.display = 'none';
+    backgroundMusic.pause();
+  });
+
+  const virtualTourUrl = "http://127.0.0.1:5500/index.htm";
+  virtualTourBtn.addEventListener('click', () => {
+    window.location.href = virtualTourUrl;
+  });
+
+  // Smooth scroll for navbar anchors
+  document.querySelectorAll('nav a.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const target = document.getElementById(targetId);
+      if(target) {
+        target.scrollIntoView({behavior: 'smooth', block:"start"});
+      }
+      // Close menu after clicking on small screens
+      if(window.innerWidth <= 768){
+        toggleMenu(false);
+      }
+    });
+  });
+
+  // Hamburger toggle function
+  function toggleMenu(show) {
+    if(show){
+      navRight.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded','true');
+    } else {
+      navRight.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+  }
+
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    toggleMenu(!expanded);
+  });
+
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      hamburger.click();
+    }
+  });
+
+  function updateMusicIcon(){
+    if(backgroundMusic.paused){
+      musicToggleBtn.innerHTML = '&#128263;';
+      musicToggleBtn.setAttribute('aria-label', 'Turn on background music');
+    } else {
+      musicToggleBtn.innerHTML = '&#128266;';
+      musicToggleBtn.setAttribute('aria-label', 'Turn off background music');
+    }
+  }
+  musicToggleBtn.addEventListener('click', () => {
+    if(backgroundMusic.paused){
+      backgroundMusic.play();
+    } else {
+      backgroundMusic.pause();
+    }
+    updateMusicIcon();
+  });
+
+  const navItems = document.querySelectorAll('nav a, nav button');
+  navItems.forEach(el => {
+    el.addEventListener('focus', () => {
+      el.style.outline = '3px solid #f6e500';
+      el.style.outlineOffset = '3px';
+    });
+    el.addEventListener('blur', () => {
+      el.style.outline = 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
+
