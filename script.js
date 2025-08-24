@@ -1,180 +1,122 @@
-var player;
-var playersPlayingTmp = [];
-var isInitialized = false;
-var isPaused = false;
 
-function loadTour() {
-    if(player) return;
+  const landing1 = document.getElementById('landing1');
+  const landing2 = document.getElementById('landing2');
+  const getStartedBtn = document.getElementById('getStartedBtn');
+  const virtualTourBtn = document.getElementById('virtualTourBtn');
+  const musicToggleBtn = document.getElementById('musicToggleBtn');
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  const backBtn = document.getElementById('backBtn');
+  const hamburger = document.getElementById('hamburger');
+  const navRight = document.getElementById('navigation-menu');
 
-    var beginFunc = function(event){
-        if(event.name == 'begin') {
-            var camera = event.data.source.get('camera');
-            if(camera && camera.get('initialSequence') && camera.get('initialSequence').get('movements').length > 0)
-                return;
-        }
+  // Show and hide with scale/blur fade effect
+  async function showSection(toShow, toHide) {
+    // Hide current
+    toHide.classList.remove('visible');
+    toHide.classList.add('hidden');
+    await new Promise(r => setTimeout(r, 950));
 
-        if(event.sourceClassName == "MediaAudio") return;
+    toHide.style.display = 'none';
 
-        isInitialized = true;
+    // Show new
+    toShow.style.display = toShow.id === 'landing1' ? 'flex' : 'block';
+    await new Promise(r => setTimeout(r, 30));
+    toShow.classList.remove('hidden');
+    toShow.classList.add('visible');
+  }
 
-        player.unbind('preloadMediaShow', beginFunc, player, true);
-        player.unbindOnObjectsOf('PanoramaPlayListItem', 'begin', beginFunc, player, true);
-        player.unbind('stateChange', beginFunc, player, true);
-        window.parent.postMessage("tourLoaded", '*');
+  // Initial states
+  landing1.classList.add('visible');
+  landing2.classList.add('hidden');
+  landing2.style.display = 'none';
+  backBtn.style.display = 'none';
 
-        disposePreloader();
-        onVirtualTourLoaded();
-    };
+  getStartedBtn.addEventListener('click', async () => {
+    await showSection(landing2, landing1);
+    backBtn.style.display = 'block';
+    window.scrollTo(0,0);
+    backgroundMusic.play().catch(() => {});
+    updateMusicIcon();
+  });
 
-    var settings = new TDV.PlayerSettings();
-    settings.set(TDV.PlayerSettings.CONTAINER, document.getElementById('viewer'));
-    settings.set(TDV.PlayerSettings.SCRIPT_URL, 'js/script.js?v=1755364789072');
-    settings.set(TDV.PlayerSettings.WEBVR_POLYFILL_URL, 'lib/WebVRPolyfill.js?v=1755364789072');
-    settings.set(TDV.PlayerSettings.HLS_URL, 'lib/Hls.js?v=1755364789072');
-    settings.set(TDV.PlayerSettings.QUERY_STRING_PARAMETERS, 'v=1755364789072');
-    window.tdvplayer = player = TDV.PlayerAPI.create(settings);
+  backBtn.addEventListener('click', async () => {
+    await showSection(landing1, landing2);
+    backBtn.style.display = 'none';
+    backgroundMusic.pause();
+  });
 
-    player.bind('preloadMediaShow', beginFunc, player, true);
-    player.bind('stateChange', beginFunc, player, true);
-    player.bindOnObjectsOf('PanoramaPlayListItem', 'begin', beginFunc, player, true);
-    player.bindOnObject('rootPlayer', 'start', function(e){
-        var queryDict = {}; 
-        location.search.substr(1).split("&").forEach(function(item) {
-            var k = item.split("=")[0], v = decodeURIComponent(item.split("=")[1]);
-            queryDict[k] = v;
-        });
-        var item;
-        if("media-index" in queryDict){
-            item = setMediaByIndex(parseInt(queryDict["media-index"]) - 1);
-        }
-        else if("media-name" in queryDict){
-            item = setMediaByName(queryDict["media-name"]);
-        }
-        else{
-            item = setMediaByIndex(0);
-        }
-        if(item != undefined && "trigger-overlay-name" in queryDict){
-            triggerOverlayByName(item, queryDict["trigger-overlay-name"], "trigger-overlay-event" in queryDict ? queryDict["trigger-overlay-event"] : "click");
-        }
+  const virtualTourUrl = "https://website-intro-laboratorium.vercel.app/";
+  virtualTourBtn.addEventListener('click', () => {
+    window.location.href = virtualTourUrl;
+  });
 
-        player.getById('rootPlayer').bind('tourEnded', function(){
-            onVirtualTourEnded();
-        }, player, true);
-    }, player, false);
-}
+  // Smooth scroll for navbar anchors
+  document.querySelectorAll('nav a.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const target = document.getElementById(targetId);
+      if(target) {
+        target.scrollIntoView({behavior: 'smooth', block:"start"});
+      }
+      // Close menu after clicking on small screens
+      if(window.innerWidth <= 768){
+        toggleMenu(false);
+      }
+    });
+  });
 
-function pauseTour() {
-    isPaused = true;
-    if(!isInitialized) return;
-
-    var playLists = player.getByClassName('PlayList');
-    for(var i = 0; i < playLists.length; i++) {
-        var playList = playLists[i];
-        var index = playList.get('selectedIndex');
-        if(index != -1) {
-            var item = playList.get('items')[index];
-            var itemPlayer = item.get('player');
-            if(itemPlayer && itemPlayer.pause) {
-                playersPlayingTmp.push(itemPlayer);
-                itemPlayer.pause();
-            }
-        }
-    }
-
-    player.getById('pauseGlobalAudios')();
-}
-
-function resumeTour() {
-    isPaused = false;
-    if(!isInitialized) return;
-
-    while(playersPlayingTmp.length) {
-        var viewer = playersPlayingTmp.pop();
-        viewer.play();
-    }
-
-    player.getById('resumeGlobalAudios')();
-}
-
-function onVirtualTourLoaded() {
-    if(isPaused) pauseTour();
-}
-
-function onVirtualTourEnded() { }
-
-function getRootPlayer() {
-    return window.tdvplayer !== undefined ? window.tdvplayer.getById('rootPlayer') : undefined;
-}
-
-function setMediaByIndex(index) {
-    var rootPlayer = getRootPlayer();
-    if(rootPlayer !== undefined) {
-        return rootPlayer.setMainMediaByIndex(index);
-    }
-}
-
-function setMediaByName(name) {
-    var rootPlayer = getRootPlayer();
-    if(rootPlayer !== undefined) {
-        return rootPlayer.setMainMediaByName(name);
-    }
-}
-
-function triggerOverlayByName(item, name, eventName) {
-    var rootPlayer = getRootPlayer();
-    if(rootPlayer !== undefined) {
-        item.bind('begin', function(e){
-            item.unbind('begin', arguments.callee, this);
-            var overlay = rootPlayer.getPanoramaOverlayByName(item.get('media'), name);
-            if(overlay)
-                rootPlayer.triggerOverlay(overlay, eventName);
-        }, rootPlayer);
-    }
-}
-
-function showPreloader() {
-    var preloadContainer = document.getElementById('preloadContainer');
-    if(preloadContainer != undefined)
-        preloadContainer.style.opacity = 1;
-}
-
-function disposePreloader() {
-    var preloadContainer = document.getElementById('preloadContainer');
-    if(preloadContainer == undefined)
-        return;
-
-    var transitionEndName = transitionEndEventName();
-    if(transitionEndName) {
-        preloadContainer.addEventListener(transitionEndName, hide, false);
-        preloadContainer.style.opacity = 0;
-        setTimeout(hide, 500);
+  // Hamburger toggle function
+  function toggleMenu(show) {
+    if(show){
+      navRight.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded','true');
     } else {
-        hide();
+      navRight.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
     }
+  }
 
-    function hide() {
-        preloadContainer.style.visibility = 'hidden';
-        preloadContainer.style.display = 'none';
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    toggleMenu(!expanded);
+  });
+
+  hamburger.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      hamburger.click();
     }
+  });
 
-    function transitionEndEventName () {
-        var el = document.createElement('div');
-        var transitions = {
-            'transition':'transitionend',
-            'OTransition':'otransitionend',
-            'MozTransition':'transitionend',
-            'WebkitTransition':'webkitTransitionEnd'
-        };
-        for (var t in transitions) {
-            if (el.style[t] !== undefined) {
-                return transitions[t];
-            }
-        }
-        return undefined;
+  function updateMusicIcon(){
+    if(backgroundMusic.paused){
+      musicToggleBtn.innerHTML = '&#128263;';
+      musicToggleBtn.setAttribute('aria-label', 'Turn on background music');
+    } else {
+      musicToggleBtn.innerHTML = '&#128266;';
+      musicToggleBtn.setAttribute('aria-label', 'Turn off background music');
     }
-}
+  }
+  musicToggleBtn.addEventListener('click', () => {
+    if(backgroundMusic.paused){
+      backgroundMusic.play();
+    } else {
+      backgroundMusic.pause();
+    }
+    updateMusicIcon();
+  });
 
-function onLoad() {
-    showPreloader();
-    loadTour();
-}
+  const navItems = document.querySelectorAll('nav a, nav button');
+  navItems.forEach(el => {
+    el.addEventListener('focus', () => {
+      el.style.outline = '3px solid #f6e500';
+      el.style.outlineOffset = '3px';
+    });
+    el.addEventListener('blur', () => {
+      el.style.outline = 'none';
+    });
+  });
+

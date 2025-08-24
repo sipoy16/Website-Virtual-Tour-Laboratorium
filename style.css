@@ -7,7 +7,7 @@
     height: 100%;
     background: url('images/Laboratorium UPNVYK.png') no-repeat center center fixed;
     background-size: cover;
-    color: #ffffff;
+    color: #FFD700;
     overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
   }
@@ -154,8 +154,8 @@
     text-decoration: none;
   }
   nav a:hover, nav button:hover {
-    background: #FFD70033;
-    color: #FFD700;
+    background: #f7f6f433;
+    color: #47453d;
   }
 
   /* Hamburger styles */
@@ -256,7 +256,7 @@
     padding: 24px;
     background: rgba(0,0,0,0.6);
     border-radius: 18px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    box-shadow: 0 8px 30px rgba(180,150,0,0.9);
     backdrop-filter: blur(10px);
   }
   .section h2 {
