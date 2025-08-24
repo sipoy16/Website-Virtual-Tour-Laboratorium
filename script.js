@@ -1,4 +1,4 @@
-
+{
   const landing1 = document.getElementById('landing1');
   const landing2 = document.getElementById('landing2');
   const getStartedBtn = document.getElementById('getStartedBtn');
@@ -8,7 +8,7 @@
   const backBtn = document.getElementById('backBtn');
   const hamburger = document.getElementById('hamburger');
   const navRight = document.getElementById('navigation-menu');
-
+}
   // Show and hide with scale/blur fade effect
   async function showSection(toShow, toHide) {
     // Hide current
