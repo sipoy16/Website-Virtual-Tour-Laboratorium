@@ -75,7 +75,7 @@
     animation: blink 2s infinite alternate;
   }
 
-  /* Buttons - modern gradient with subtle shadows */
+  /* Buttons Get started - modern gradient with subtle shadows */
   .btn {
     cursor: pointer;
     background: linear-gradient(145deg, #FFD700, #d4c300);
