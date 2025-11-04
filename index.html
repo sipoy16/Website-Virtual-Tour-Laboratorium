@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="Logo Web.png">
+<link rel="shortcut icon" type="image/png" href="Logo Web.png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Welcome To Laboratory UPN "Veteran" Yogyakarta</title>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<!--- Rute --->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+<!-- Panggil CSS -->
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- Landing Page 1 -->
+<section id="landing1" aria-label="Landing page welcome" class="visible">
+  <h1>Welcome to Laboratorium Riset Terpadu UPN "Veteran" Yogyakarta</h1>
+  <p class="slowmo-text" aria-live="polite">Explore innovative research and technology.</p>
+  <button class="btn" id="getStartedBtn" aria-label="Start experience"><cite>"Get Started"</cite></button>
+</section>
+
+<!-- Landing Page 2 -->
+<section id="landing2" aria-label="Landing page information" class="hidden" style="display:none;">
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-left" aria-label="Brand">
+      Laboratorium Riset Terpadu UPN <span>"Veteran"</span> Yogyakarta
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navigation-menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-right" id="navigation-menu">
+      <a href="#virtual-tour" class="nav-link">Virtual Tour</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#instrument" class="nav-link">Laboratory</a>
+      <a href="#rute" class="nav-link">Rute</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <button id="backBtn" aria-label="Back to home">Back</button>
+
+  <div id="virtual-tour">
+    <h2>Virtual Tour</h2>
+    <button class="btn" id="virtualTourBtn">"Start Virtual Tour"</button>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="about" tabindex="0">
+    <h2>About The Laboratory</h2>
+    <p>Laboratorium Riset Terpadu UPN “Veteran” Yogyakarta merupakan fasilitas riset unggulan yang dibangun untuk mendukung kegiatan penelitian lintas disiplin di lingkungan universitas. Pembangunan gedung ini dimulai pada tahun 2019 dan secara resmi diresmikan pada tanggal 28 Juni 2021. Gedung ini terdiri atas empat lantai dan satu <cite>rooftop</cite>, dengan luas bangunan mencapai kurang lebih 2.800 meter persegi.<p>
+    <p>Laboratorium ini dirancang sebagai pusat kolaborasi antara fakultas, pusat studi, dan mitra eksternal, baik dari dunia industri maupun lembaga pemerintah. Berlokasi di Kampus Condongcatur, Sleman, gedung ini menjadi simbol komitmen UPN “Veteran” Yogyakarta dalam memajukan riset, inovasi, dan pengembangan teknologi. Dilengkapi dengan fasilitas modern dan sistem manajemen laboratorium berbasis digital, Laboratorium Riset Terpadu berperan penting dalam mendukung kegiatan akademik, program Merdeka Belajar Kampus Merdeka (MBKM), serta pengembangan produk riset yang berdampak nyata bagi masyarakat.</p>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section" id="features" tabindex="0">
+    <h2>Featured Highlights</h2>
+    <div aria-label="List of featured highlights">
+      <div class="feature-card" tabindex="0">
+        <h3>Fasilitas Riset Terpadu</h3>
+        <p>Pusat riset yang terintegrasi dengan peralatan canggih untuk mendukung kegiatan penelitian multidisiplin dalam satu tempat.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Teknologi Terkini</cite></h3>
+        <p>Akses ke berbagai perangkat digital mutakhir, sistem pemetaan 3D, alat penginderaan jauh, dan peralatan canggih lainnya untuk meningkatkan ketelitian dan inovasi penelitian.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Ekosistem Kolaborasi</h3>
+        <p>Mendorong kolaborasi antara mahasiswa, dosen, dan peneliti lintas bidang guna menghasilkan proyek riset yang berdampak luas.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Ruang Seminar dan Diskusi Cerdas</h3>
+        <p>Ruang seminar dan diskusi yang modern, dilengkapi sistem digital pintar, ideal untuk presentasi, lokakarya, dan forum ilmiah.</p>
+      </div>
+      <div class="feature-card" tabindex="0">
+        <h3>Dukungan untuk Inovasi dan Prototipe</h3>
+        <p>Ruang dan peralatan khusus untuk pengembangan prototipe dan riset eksperimental, mendukung mahasiswa dan peneliti dalam mewujudkan ide menjadi solusi nyata.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTRUMENTS -->
+<section id="instrument" class="section" tabindex="0">
+  <h2>Laboratory</h2>
+
+  <!-- Tab Buttons -->
+  <div class="tab-buttons">
+    <button class="tab-btn active" data-tab="klasifikasi">Klasifikasi Lab</button>
+    <button class="tab-btn" data-tab="sarana">Sarana Peralatan</button>
+    <button class="tab-btn" data-tab="instrumen">Laboratorium Instrumentasi</button>
+    <button class="tab-btn" data-tab="bagan_alir">Bagan Alir Pengujian Sampel</button>
+    <button class="tab-btn" data-tab="pelayanan">Pelayanan Pengujian</button>
+  </div>
+
+  <!-- Tab Content -->
+
+  <!-- 1. Klasifikasi Laboratorium -->
+  <div class="tab-content active" id="klasifikasi">
+    <h2 style="text-align:center; font-size:22px; font-weight:600; margin-bottom:15px; color:#ffd700;">
+      Klasifikasi Laboratorium (Tipe IV)
+    </h2>
+    <div style="text-align:justify; line-height:1.8; font-size:15px; color:#f1f1f1; margin-left:10px;">
+      <p style="margin-top:0; margin-bottom:15px;">
+      Berdasarkan <strong>Permendikbud No. 15 Tahun 2014</strong> tentang 
+      <em>Jabatan Fungsional Pranata Laboratorium Pendidikan (PLP)</em> dan Angka Kreditnya,
+      laboratorium diklasifikasikan menjadi beberapa tipe berdasarkan jenis laboratorium, 
+      kedudukan, fungsi utama, serta kategori peralatan dan bahan yang digunakan.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Laboratorium Tipe I</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Laboratorium tipe I merupakan <em>laboratorium ilmu dasar yang ada di sekolah</em>.  
+      Fungsi utamanya adalah <strong>praktikum</strong>.  
+      Peralatan yang digunakan terdiri dari <strong>Kategori I, Kategori II, dan Kategori III</strong>.  
+      Bahan yang digunakan meliputi <strong>bahan umum, bahan kimia, dan bahan khusus</strong>.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Laboratorium Tipe II</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Laboratorium tipe II merupakan <em>laboratorium bidang keilmuan yang ada di jurusan</em>.  
+      Fungsi utamanya yaitu <strong>praktikum dan/atau penelitian tingkat dasar</strong>.  
+      Peralatan terdiri atas <strong>Kategori I, Kategori II, dan Kategori III</strong>.  
+      Bahan meliputi <strong>bahan umum dan bahan khusus</strong>.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Laboratorium Tipe III</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Laboratorium tipe III merupakan <em>laboratorium penelitian yang ada di jurusan/fakultas</em>.  
+      Fungsi utamanya adalah <strong>penelitian dan/atau pengembangan ipteks</strong>.  
+      Peralatan mencakup <strong>Kategori I, Kategori II, dan Kategori III</strong>.  
+      Bahan terdiri dari <strong>bahan umum dan bahan khusus</strong>.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Laboratorium Tipe IV</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Laboratorium tipe IV adalah <em>laboratorium terpadu</em> yang terdapat di 
+      <strong>pusat studi, fakultas, atau unit pelaksana teknis (UPT)</strong>.  
+      Laboratorium ini menyelenggarakan <strong>pendidikan dan/atau pelatihan</strong> 
+      dengan fasilitas peralatan <strong>Kategori 1, 2, dan 3</strong>, serta bahan 
+      <strong>kategori umum dan khusus</strong>.  
+      Fungsinya adalah <strong>melayani kegiatan penelitian dan pengabdian kepada masyarakat, mahasiswa, serta dosen</strong>.
+    </p>
+    </div>
+  </div>
+
+  <!-- 2. Sarana Peralatan -->
+  <div class="tab-content" id="sarana">
+    <h2 style="text-align:center; font-size:22px; font-weight:600; margin-bottom:15px; color:#ffd700;">
+      Sarana Peralatan
+    </h2>
+    <div style="text-align:justify; line-height:1.8; font-size:15px; color:#f1f1f1; margin-left:10px;">
+      <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Kategori 1</h3>
+        <p style="margin-top:0; margin-bottom:15px;">
+          Peralatan yang cara pengoperasian dan perawatannya <strong>mudah</strong>, 
+          risiko penggunaan <strong>rendah</strong>, akurasi atau kecermatan pengukurannya 
+          <strong>rendah</strong>, serta memiliki sistem kerja yang <strong>sederhana</strong>. 
+          Pengoperasiannya cukup dilakukan dengan menggunakan <strong>panduan</strong>.
+        </p>
+
+        <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Kategori 2</h3>
+        <p style="margin-top:0; margin-bottom:15px;">
+          Peralatan yang cara pengoperasian dan perawatannya tergolong <strong>sedang</strong>, 
+          dengan sistem kerja yang <strong>tidak terlalu rumit</strong>. 
+          Pengoperasiannya memerlukan <strong>pelatihan khusus atau tertentu</strong>.
+        </p>
+
+        <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">Kategori 3</h3>
+        <p style="margin-top:0; margin-bottom:15px;">
+          Peralatan yang cara pengoperasian dan perawatannya <strong>sulit</strong>, 
+          memiliki risiko penggunaan <strong>tinggi</strong>, serta 
+          akurasi atau kecermatan pengukurannya <strong>tinggi</strong>. 
+          Sistem kerjanya <strong>rumit</strong> dan pengoperasiannya memerlukan 
+          <strong>pelatihan khusus atau sertifikasi</strong>.
+        </p>
+    </div>
+  </div>
+
+  <!-- 3. Laboratorium Instrumentasi -->
+  <div class="tab-content" id="instrumen">
+    <h2 style="text-align:center; font-size:22px; font-weight:600; margin-bottom:15px; color:#ffd700;">
+      Laboratorium Instrumentasi
+    </h2>
+    <div style="text-align:justify; line-height:1.8; font-size:15px; color:#f1f1f1; margin-left:10px;">
+    <div class="accordion" aria-label="Daftar Laboratorium Instrumen">
+
+      <!-- SEM + MLA -->
+      <button class="accordion-btn">Scanning Electron Microscope + MLA Oxford</button>
+      <div class="accordion-content">
+        <h3>Scanning Electron Microscope (SEM) Tipe JEOL JSM-IT510LV + EDS + OXFORD MLA</h3>
+        <p>Alat yang digunakan untuk memperoleh gambar permukaan sampel dengan resolusi tinggi serta menganalisis komposisi kimia. 
+            Sementara Mineral Liberation Analysis (MLA) adalah teknik yang digunakan bersamaan dengan SEM untuk menganalisis mineral pada sampel. 
+            Dengan SEM, peneliti dapat mempelajari morfologi material, sementara MLA memungkinkan identifikasi unsur dari mineral penyusun. 
+            SEM dan MLA merupakan perangkat penting dalam geologi dan pertambangan untuk menganalisis komposisi serta proses geologi yang terlibat dalam pembentukan dan ekstraksi sumber daya mineral.</p>
+        <img src="images/Scanning-Electron-Microscope.jpg" alt="Scanning Electron Microscope" class="instrument-img">
+      </div>
+
+      <!-- XRD -->
+      <button class="accordion-btn">X-Ray Diffraction (XRD)</button>
+      <div class="accordion-content">
+        <h3>X-Ray Diffraction (XRD) Tipe Malvern Panalytical Empyrean Series 3</h3>
+        <p>Teknik analisis cepat non-destruktif untuk mengidentifikasi sampel padat fase kristal dan memberikan informasi dimensi satu sel kristal (karakteristik material). Analisis XRD diaplikasikan untuk:</p>
+        <p>1. Bidang kimia: Menentukan struktur kristal dan karakteristik material.</p>
+        <p>2. Bidang geologi: Menentukan komposisi mineral dalam batuan.</p>
+        <p>3. Bidang farmasi: Mengidentifikasi bentuk polimorfik dan karakteristik nanopartikel.</p>
+        <img src="images/Floor‑Stand X‑Ray Diffractometer (XRD).jpg" alt="X-Ray Diffraction (XRD)" class="instrument-img">
+      </div>
+
+      <!-- XRF -->
+      <button class="accordion-btn">X-Ray Fluorescence (XRF)</button>
+      <div class="accordion-content">
+        <h3>X-Ray Fluorescence (XRF) Tipe Malvern Panalytical Zetium</h3>
+        <p>Merupakan sebuah alat yang digunakan untuk menentukan kimia sampel dengan mengukur sinar-X fluoresensi (atau sekunder) 
+            yang dipancarkan dari sampel ketika dieksitasi oleh sumber sinar-X primer. Setiap elemen yang ada dalam sampel menghasilkan set karakteristik sinar-X fluoresensi 
+            yang unik untuk mengidentifikasi elemen tersebut. Spektroskopi XRF adalah teknik yang sangat baik untuk analisis kualitatif dan kuantitatif komposisi material. 
+            XRF digunakan untuk analisis kimia non-destruktif yang rutin terutama dalam penyelidikan logam, kaca, keramik, dan bahan bangunan, serta untuk analisis bidang geokimia, ilmu forensik, arkeologi, dan objek seni.</p>
+        <img src="images/Wavelength Dispersive X-Ray Fluorescence.jpg" alt="X-Ray Fluorescence (XRF)" class="instrument-img">
+      </div>
+
+      <!-- CHNS/O Analyzer -->
+      <button class="accordion-btn">CHNS/O Analyzer</button>
+      <div class="accordion-content">
+        <h3>CHNS/O Analyzer Tipe FLASHSMART</h3>
+        <p>Merupakan suatu alat untuk menganalisis kandungan karbon (C), hidrogen (H), nitrogen (N), belerang (S), dan oksigen (O) dalam suatu sampel atau material. 
+            Prinsip kerja alat ini adalah berdasarkan hasil pembakaran. Produk pembakaran sampel akan dianalisis oleh detektor sehingga dapat diketahui rasio (perbandingan) 
+            tiap unsur CHNS/O dalam sampel. Analisis CHNS/O umumnya digunakan dalam bidang energi, petrokimia, lingkungan hidup, pertanian, farmasi, dan lain sebagainya.</p>
+        <img src="images/TOC Analyzer.jpg" alt="CHNS/O Analyzer" class="instrument-img">
+      </div>
+
+      <!-- ICP-MS -->
+      <button class="accordion-btn">ICP-MS</button>
+      <div class="accordion-content">
+        <h3>ICP-MS Tipe Thermo Scientific Icap RQ</h3>
+        <p>Inductively Coupled Plasma–Mass Spectrofotometry (ICP-MS) adalah teknik analisis yang digunakan untuk penentuan kadar logam multi-unsur yang menggunakan sumber plasma untuk atomisasi dalam sampel. 
+            Analisis ICP-MS sangat diperlukan dalam bidang aplikasi, antara lain:</p>
+        <p>1. Bahan alami: batuan, mineral, tanah, air, sedimen, dan jaringan hewan.</p>
+        <p>2. Bidang geokimia, mineralogi, pertanian, kehutanan, perikanan, kesehatan, dan industri makanan.</p>
+        <p>3. Ilmu lingkungan: distribusi dan siklus unsur di ekosistem.</p>
+        <p>Dapat mendeteksi unsur dalam konsentrasi sangat rendah seperti Sulfur, Boron, Fosfor, Titanium, dan Zirkonium.</p>
+        <img src="images/ICP‑MS.jpg" alt="ICP-MS" class="instrument-img">
+      </div>
+
+      <!-- Surface Area Analyzer -->
+      <button class="accordion-btn">Surface Area Analyzer (SAA)</button>
+      <div class="accordion-content">
+        <h3>Surface Area Analyzer (SAA) Tipe Quantachrome NOVA 1200e</h3>
+        <p>Surface Area Analyzer berfungsi untuk menentukan luas permukaan material, distribusi pori dari material, dan isoterm adsorpsi suatu gas pada suatu bahan. 
+            Analisis SAA sangat diperlukan dalam bidang aplikasi, antara lain:</p>
+        <p>1. Lingkungan: analisis luas permukaan adsorben limbah.</p>
+        <p>2. Bidang kimia.</p>
+        <img src="images/Surface Area Analyzer.jpg" alt="Surface Area Analyzer (SAA)" class="instrument-img">
+      </div>
+
+      <!-- Bomb Calorimeter -->
+      <button class="accordion-btn">Bomb Calorimeter</button>
+      <div class="accordion-content">
+        <h3>Bomb Calorimeter Tipe IKA C8000 ISOPERIBOL</h3>
+        <p>Bomb Calorimeter merupakan alat uji nilai kalor suatu bahan/material, baik dalam wujud padat maupun cair. 
+            Prinsip kerja alat ini adalah dengan mengukur perubahan suhu selama reaksi kimia (pembakaran) berlangsung. Pengujian menggunakan Bomb Calorimeter umumnya dilakukan pada bahan bakar seperti batubara dan minyak untuk menentukan kualitas berdasarkan kalori tiap bahan bakar. 
+            Selain itu, pengujian ini juga sebagai bentuk pengendalian mutu (Quality Control) suatu bahan bakar.</p>
+        <img src="images/Bomb Calorimeter.jpg" alt="Bomb Calorimeter" class="instrument-img">
+      </div>
+
+      <!-- STA -->
+      <button class="accordion-btn">STA (Simultaneous Thermal Analyzer)</button>
+      <div class="accordion-content">
+        <h3>STA Tipe STA N-650/1000/1500</h3>
+        <p>Simultaneous Thermal Analyzer (STA) adalah teknik analisis
+            termal simultan yang didasarkan pada pengukuran variasi massa sampel material yang dikarakterisasi dan perbedaan suhu antara sampel material dan referensi inert. Aplikasi spesifik Simultaneous Thermal Analyzer:</p>
+        <p>1. Suhu transisi gelas/polimer</p>
+        <p>2. Transisi fasa polimorfik</p>
+        <p>3. Karakteristik material</p>
+        <p>4. Penentuan diagram fasa</p>
+        <p>5. Jalur dekomposisi</p>
+        <p>6. Kinetik</p>
+        <p>7. Entalpi dan kapasitas panas</p>
+        <img src="images/Simultaneous Thermal Analyzer.jpg" alt="STA(Simultaneous Thermal Analyzer)" class="instrument-img">
+      </div>
+
+      <!-- RT-PCR -->
+      <button class="accordion-btn">RT-PCR (Real-Time Polymerase Chain Reaction)</button>
+      <div class="accordion-content">
+        <h3>RT-PCR Tipe ARIA-MX</h3>
+        <p>RT-PCR (Real-Time Polymerase Chain Reaction) adalah teknik yang digunakan untuk mengamplifikasi DNA target dari suatu organisme yang bertujuan untuk mengetahui kuantitas DNA target. 
+            Instrumen Real-Time PCR bekerja berdasarkan prinsip PCR. Namun berbeda dengan PCR konvensional, dengan RT-PCR kita dapat mengamati proses penggandaan DNA target secara real-time dari satu PCR ke siklus 
+            selanjutnya tanpa perlu melakukan elektroforesis (agarose) untuk melihat hasilnya.</p>
+        <img src="images/RT-PCR.png" alt="RT-PCR (Real-Time Polymerase Chain Reaction)" class="instrument-img">
+      </div>
+
+      <!-- GCMS -->
+      <button class="accordion-btn">GCMS (Gas Chromatography and Mass Spectrometry)</button>
+      <div class="accordion-content">
+        <h3>GCMS Tipe Thermo Scientific ISQ 7000</h3>
+        <p>Gas Chromatography and Mass Spectrometry (GCMS) merupakan gabungan dari alat GC dan MS. Sampel yang dianalisis akan dipisahkan dahulu dengan alat GC (Gas Chromatography), 
+            kemudian diidentifikasi oleh alat MS (Mass Spectrometry). GC-MS digunakan untuk identifikasi kualitatif dan pengukuran kuantitatif dari komponen individual dalam senyawa campuran kompleks yang mudah menguap (volatil).</p>
+        <img src="images/GC‑MS.jpg" alt="GCMS(Gas Chromatography and Mass Spectrometry)" class="instrument-img">
+      </div>
+
+      <!-- HPLC -->
+      <button class="accordion-btn">HPLC (High Performance Liquid Chromatography)</button>
+      <div class="accordion-content">
+        <h3>HPLC Tipe Thermo Scientific ULTIMATE 3000</h3>
+        <p>High Performance Liquid Chromatography (HPLC) digunakan untuk menentukan atau memisahkan atau menganalisis kadar bahan aktif pada suatu sampel 
+            (obat, makanan, atau herbal). Merupakan salah satu teknik kromatografi untuk zat cair yang dijalankan dengan tekanan tinggi. 
+            Aplikasi utama HPLC antara lain:</p>
+        <p>1. Bioteknologi</p>
+        <p>2. Industri Hayati</p>
+        <p>3. Industri Farmasi</p>
+        <img src="images/instrumen High Performance Liquid Chromatography (HPLC).jpg" alt="HPLC(High Performance Liquid Chromatography)" class="instrument-img">
+      </div>
+
+      <!-- UTM -->
+      <button class="accordion-btn">Kuat Tekan (Universal Testing Machine - UTM)</button>
+      <div class="accordion-content">
+        <h3>UTM Tipe JCM 3000</h3>
+        <p>Universal Testing Machine (UTM) merupakan alat uji untuk mengukur tingkat ketahanan, kekuatan tarik suatu bahan atau material. Alat ini digunakan untuk melakukan berbagai pengujian material 
+            menggunakan metode uji tekan (compression) maupun uji tarik (tensile). 
+            Umumnya digunakan untuk uji logam, besi, dan bahan bangunan, serta diaplikasikan pada industri pertambangan, perminyakan, dan lainnya.</p>
+        <img src="images/Universal Testing Machine (UTM).jpg" alt="Kuat Tekan (Universal Testing Machine - UTM)" class="instrument-img">
+      </div>
+
+      <!-- Dynamic Linear Swell Meter -->
+      <button class="accordion-btn">Dynamic Linear Swell Meter</button>
+      <div class="accordion-content">
+        <h3>Dynamic Linear Swell Meter Tipe OFITE 009</h3>
+        <p>Swell Meter adalah alat yang digunakan dalam industri minyak dan gas untuk mengukur perubahan volume batuan pada saat terinjeksi cairan. Alat ini berguna untuk memahami perilaku batuan terhadap fluida selama proses produksi minyak atau injeksi fluida ke dalamnya. 
+            Dengan mengukur perubahan volume batuan, Swell Meter membantu dalam pengoptimalan produksi minyak dan gas serta mengukur efektivitas metode injeksi fluida.</p>
+        <img src="images/Swell Meter.jpg" alt="Dynamic Linear Swell Meter" class="instrument-img">
+      </div>
+
+      <!-- Magnetic Barrier Separator -->
+      <button class="accordion-btn">Magnetic Barrier Separator</button>
+      <div class="accordion-content">
+        <h3>Magnetic Barrier Separator Tipe Frantz Model LB-1</h3>
+        <p>Magnetic Barrier Separator merupakan alat yang digunakan untuk sistem konsentrasi atau pemisahan antar mineral dengan memanfaatkan perbedaan sifat magnetik suatu mineral secara selektif. Pemisahan ini memanfaatkan medan magnet yang dihasilkan oleh elektromagnet. 
+            Metode ini banyak digunakan dalam ilmu kebumian untuk mengekskstraksi mineral bijih, memisahkan fraksi batuan, serta analisis geokimia batuan beku dan metamorf.</p>
+        <img src="images/Magnetic Barrier Separator.jpg" alt="Magnetic Barrier Separator" class="instrument-img">
+      </div>
+
+      <!-- Spektrofotometer UV-Vis -->
+      <button class="accordion-btn">Spektrofotometer UV–Vis</button>
+      <div class="accordion-content">
+        <h3>Spektrofotometer UV-Vis Tipe PG Instruments T80+</h3>
+        <p>Spektrofotometer UV-Vis adalah alat pengukur serapan cahaya di daerah ultraviolet (200–350 nm) dan sinar tampak (350–800 nm) oleh suatu senyawa. Larutan yang dianalisis diukur serapan sinar ultra violetnya atau sinar tampaknya. 
+            Konsentrasi larutan yang dianalisis akan sebanding dengan jumlah sinar yang diserap oleh zat yang terdapat dalam larutan tersebut.</p>
+        <img src="images/Spektrofotometer UV‑Vis.png" alt="Spektrofotometer UV-Vis" class="instrument-img">
+      </div>
+
+      <!-- Mercury Analyzer -->
+      <button class="accordion-btn">Mercury Analyzer</button>
+      <div class="accordion-content">
+        <h3>Mercury Analyzer Tipe AULA–254 GOLD</h3>
+        <p>Mercury Analyzer merupakan alat yang digunakan untuk menganalisis merkuri secara cepat, dengan sensitivitas tinggi, dan dapat menentukan jumlah merkuri pada sampel padat, cair, dan gas. 
+            Alat ini digunakan untuk mengukur kadar merkuri di dalam air limbah, makanan, urin, sampel geologi, dan mineralogi. Metode yang digunakan dalam mercury analyzer adalah analisis aliran kontinu (CFA).</p>
+        <img src="images/Mercury Analyzer.jpg" alt="Mercury Analyzer" class="instrument-img">
+      </div>
+
+      <!-- Microwave Digestion -->
+      <button class="accordion-btn">Microwave Digestion</button>
+      <div class="accordion-content">
+        <h3>Microwave Digestion Tipe BERGHOF Speedwave XPERT/XTRACT</h3>
+        <p>Microwave Digestion digunakan untuk mendestruksi (preparasi) sampel uji dengan metode destruksi asam/basa menggunakan bantuan gelombang mikro.</p>
+        <img src="images/Microwave Digester.png" alt="Microwave Digestion" class="instrument-img">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- 4. Bagan Alir Pengujian -->
+  <div class="tab-content" id="bagan_alir">
+    <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:30px;">
+      <div style="flex:1; min-width:320px; text-align:center;">
+    <img src="images/Bagan Alir Pengujian.png" 
+         alt="Bagan Alir Pengujian" 
+         style="width:100%; max-width:420px; border-radius:15px; 
+                box-shadow:0 0 20px rgba(255,215,0,0.3); display:block; margin:auto;">
+  </div>
+
+  <!-- Teks penjelasan di kanan -->
+  <div style="flex:1.5; min-width:320px; line-height:1.8; font-size:15px; color:#f1f1f1; text-align:justify;">
+
+    <h2 style="text-align:center; font-size:22px; font-weight:600; margin-bottom:20px; color:#ffd700;">
+      Alur Proses Pengujian Sampel Laboratorium Terpadu
+    </h2>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">1. Asal Sampel</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Tahap awal berasal dari berbagai sumber sampel seperti <strong>padatan, cairan, larutan,</strong> maupun <strong>gas</strong> 
+      yang akan dianalisis sesuai kebutuhan pengujian.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">2. Pelanggan</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      <strong>Pelanggan</strong> membawa sampel ke laboratorium untuk dilakukan proses analisis 
+      sesuai dengan jenis dan parameter pengujian yang diinginkan.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">3. Penerimaan Sampel</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Petugas laboratorium menerima sampel yang diajukan oleh pelanggan dan melakukan 
+      <strong>pemeriksaan kelengkapan data serta kondisi sampel</strong>. 
+      Jika belum lengkap, sampel dikembalikan untuk dilengkapi.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">4. Pendaftaran Pengujian</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Setelah sampel dinyatakan lengkap, dilakukan <strong>pendaftaran pengujian</strong> 
+      untuk menentukan jenis analisis yang akan dilakukan. 
+      Jika tidak sesuai, maka dibuat <strong>berita acara analisis</strong>.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">5. Penanganan Sampel</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Sampel yang sudah terdaftar ditangani sesuai dengan <strong>standar prosedur operasional (SOP)</strong> 
+      agar kualitas dan akurasi data tetap terjaga sebelum dilakukan pengujian.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">6. Pelaksanaan Pengujian</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      <strong>Pengujian dilakukan oleh analis laboratorium</strong> menggunakan peralatan dan metode 
+      yang sesuai dengan standar agar hasil analisis valid dan dapat dipertanggungjawabkan.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">7. Hasil Uji</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Hasil uji kemudian <strong>dianalisis dan dicatat</strong> untuk memastikan keakuratan dan konsistensi data. 
+      Data ini menjadi dasar dalam penyusunan laporan hasil analisis.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">8. Bendahara Penerimaan</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      Setelah pengujian selesai, pelanggan melakukan <strong>pembayaran biaya analisis</strong> 
+      melalui bendahara penerimaan sebelum hasil akhir diterbitkan.
+    </p>
+
+    <h3 style="color:#ffd700; font-size:18px; margin-bottom:5px;">9. Admin Lab Terpadu</h3>
+    <p style="margin-top:0; margin-bottom:15px;">
+      <strong>Admin Laboratorium Terpadu</strong> menyusun dan menyerahkan 
+      <strong>laporan hasil analisis</strong> kepada pelanggan sebagai tahap akhir dari proses pelayanan.
+    </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Pelayanan Pengujian -->
+  <div class="tab-content" id="pelayanan">
+    <h2 style="text-align:center; font-size:22px; font-weight:600; margin-bottom:15px; color:#ffd700;">Pelayanan Pengujian Laboratorium</h2>
+    <div style="text-align:justify; line-height:1.8; font-size:15px; color:#f1f1f1; margin-left:10px;">
+    <p style="margin-top:0; margin-bottom:15px;">
+      Berikut merupakan daftar <strong>layanan uji</strong> yang tersedia di laboratorium, 
+      lengkap dengan <em>tautan formulir pendaftaran</em> untuk masing-masing jenis pengujian.
+    </p>
+
+    <ul style="list-style-type:disc; margin-left:25px; color:#f1f1f1;">
+      <li>Uji SAA/BET : 
+        <a href="https://forms.gle/7raAoAfxXZzMr4oR8" target="_blank" style="color:#ffd700;">https://forms.gle/7raAoAfxXZzMr4oR8</a>
+      </li>
+      <li>Uji GC Ms : 
+        <a href="https://forms.gle/kaXssJHivBSWeYuQ8" target="_blank" style="color:#ffd700;">https://forms.gle/kaXssJHivBSWeYuQ8</a>
+      </li>
+      <li>Uji Nilai Kalor (Bomb Cal) : 
+        <a href="https://forms.gle/naSxumh1eFFZpbpZA" target="_blank" style="color:#ffd700;">https://forms.gle/naSxumh1eFFZpbpZA</a>
+      </li>
+      <li>Uji HP LC : 
+        <a href="https://forms.gle/Ef7zyewooefSgdUJ7" target="_blank" style="color:#ffd700;">https://forms.gle/Ef7zyewooefSgdUJ7</a>
+      </li>
+      <li>Uji ICP-MS : 
+        <a href="https://forms.gle/ZgfZehfdUPycC6je7" target="_blank" style="color:#ffd700;">https://forms.gle/ZgTZehfdUPycC6Je7</a>
+      </li>
+      <li>Uji CHNSO : 
+        <a href="https://forms.gle/C7JyHzjhdQfP9ZKj6" target="_blank" style="color:#ffd700;">https://forms.gle/C7JyHzjhdOF9ZKj6</a>
+      </li>
+      <li>Uji SEM-MLA : 
+        <a href="https://forms.gle/2w4RAPa6M8bRbdnT9" target="_blank" style="color:#ffd700;">https://forms.gle/2w4RAPa6M8bRbdnT9</a>
+      </li>
+      <li>Uji Linear Swelling Meter : 
+        <a href="https://forms.gle/Yd4vNeZ4AWoesGcY7" target="_blank" style="color:#ffd700;">https://forms.gle/Yd4vNeZ4AWoesGcy7</a>
+      </li>
+      <li>Uji Mercury Analyzer : 
+        <a href="https://forms.gle/igi2uiVk1QHaV2Sd7" target="_blank" style="color:#ffd700;">https://forms.gle/jgi2uViK1QHav2S7d</a>
+      </li>
+      <li>Uji STA : 
+        <a href="https://forms.gle/CsnsouoqXszTULSj9" target="_blank" style="color:#ffd700;">https://forms.gle/CsnsuooqXszTULSj9</a>
+      </li>
+      <li>Uji XRD : 
+        <a href="https://forms.gle/xYondbnDqk4Sdk9R6" target="_blank" style="color:#ffd700;">https://forms.gle/xYondbnDqk4Sdk9R6</a>
+      </li>
+      <li>Uji XRF : 
+        <a href="https://forms.gle/svDyGL5BUN89gi1YA" target="_blank" style="color:#ffd700;">https://forms.gle/svDyGL5BUN89gi1YA</a>
+      </li>
+      <li>Spektrofotometer UV-VIS (Shimadzu UV-1280) : 
+        <a href="https://forms.gle/WvJAdDmdvBnsQi5GA" target="_blank" style="color:#ffd700;">https://forms.gle/WvJAdDmdvBnsQj5GA</a>
+      </li>
+      <li>Furnace (Nabertherm, LT 5/11/B410 Muffle Furnace) : 
+        <a href="https://forms.gle/WvJAdDmdvBnsQi5GA" target="_blank" style="color:#ffd700;">https://forms.gle/WvJAdDmdvBnsQj5GA</a>
+      </li>
+      <li>Uji Umum Lainnya : 
+        <a href="https://forms.gle/Dth3WufkkJk8xjna9" target="_blank" style="color:#ffd700;">https://forms.gle/Dth3WufkkJk8xjna9</a>
+      </li>
+    </ul>
+    <p style="margin-top:20px;">
+    </p>
+    </div>
+  </div>
+
+</section>
+
+  <!-- SECTION RUTE -->
+  <section class="section" id="rute" tabindex="0">
+    <h2>Rute ke Laboratorium Riset Terpadu</h2>
+    <div class="rute-container">
+      <form class="rute-form">
+        <div style="flex:1;">
+          <label for="Jarak">Jarak (*Meter)</label>
+          <input type="text" id="Jarak" class="form-control" readonly>
+        </div>
+      </form>
+
+      <!-- Input koordinat asal -->
+      <div class="rute-form">
+        <input type="text" id="latAsal" class="form-control" placeholder="Latitude Asal (-7.763723654760681)">
+        <input type="text" id="lngAsal" class="form-control" placeholder="Longitude Asal (110.40967759944611)">
+        <button id="btnCari" type="button">Cari Rute ke Lab Terpadu</button>
+        <button id="btnLokasiSaya" type="button">Gunakan Lokasi Saya</button>
+      </div>
+
+      <!-- Peta -->
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  </div>
+  <div class="section" id="contact" tabindex="0">
+    <h2>Contact Us</h2>
+    <h3>Email</h3>
+    <p><a>labterpadu@upnvyk.ac.id</a></p>
+    <br>
+    <h3>Phone</h3>
+    <p><a> +62 8560-2939-103</a></p>
+    <br>
+    <h3>Address</h3>
+    <p><a>Jalan Ringroad Utara, Condongcatur, Depok, Sleman, Yogyakarta, Indonesia</a></p>
+  </div>
+</div>
+</div>
+
+<!-- Musik -->
+<button id="musicToggleBtn">&#128266;</button>
+<audio id="backgroundMusic" loop>
+  <source src="coffee-with-jazz-327479.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- Script Asli -->
+<script src="script.js"></script>
+
+</body>
+</html>
